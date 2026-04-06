@@ -11,7 +11,7 @@ export const createUser = async (req, res) => {
             return res.status(400).json({ message: "Password does not match!" })
         }
         const strongPasswordRegex = /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
-        if (!strongPasswordRegex.test(password)) {
+        if (strongPasswordRegex.test(password)) {
             return res.status(400).json({ message: "Password must be more than 8 chras, upper case, lower case, number and special character" })
         }
         const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;

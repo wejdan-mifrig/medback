@@ -1,11 +1,16 @@
-import Navbar from "./componants/Navbar/Navbar.jsx";
-import Footer from "./componants/Footer/Footer.jsx";
+import { Route, Routes } from "react-router-dom";
+import Register from "./componants/Auth/login.jsx";
+import { Toaster } from "react-hot-toast";
+
 function App() {
   return (
     <>
-      <Navbar />
-      <Footer/>
-      
+      <Toaster position="top-center" />
+
+      <Routes>
+        {/* <Route path="/" element={} */}
+        <Route path="/" element={<Register />} />
+      </Routes>
     </>
   );
 }
