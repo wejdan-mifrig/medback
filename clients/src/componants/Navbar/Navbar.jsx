@@ -3,35 +3,55 @@ import {
   Box,
   Toolbar,
   Typography,
-  IconButton,
   Button,
   Drawer,
   List,
   ListItem,
   ListItemButton,
   ListItemText,
-  InputBase
+  Badge
 } from "@mui/material";
+
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import coffeeLogo from "../../assets/coffee.png"; 
+import { useState, useEffect } from "react";
+import coffeeLogo from "../../assets/coffee.png";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
+  const navigate = useNavigate();
+
+  const updateCartCount = () => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const total = cart.reduce((sum, item) => sum + item.qty, 0);
+    setCartCount(total);
+  };
+
+  useEffect(() => {
+    updateCartCount();
+    window.addEventListener("storage", updateCartCount);
+    return () => window.removeEventListener("storage", updateCartCount);
+  }, []);
 
   return (
     <AppBar
       position="sticky"
       sx={{
-        bgcolor: darkMode ?  "#ffffff":"#c4a484",
-        color: darkMode ?  "#6b4f3f":"#ffffff" ,
+        bgcolor: "#c4a484",
+        color: "#fff",
         boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-        transition: "all 0.3s"
+
       }}
     >
-      <Toolbar sx={{ display: "flex", justifyContent: "space-between", minHeight: 80 }}>
-        {}
+      <Toolbar
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          minHeight: 80
+        }}
+      >
+        {/* LOGO */}
         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
           <img
             src={coffeeLogo}
@@ -43,149 +63,102 @@ function Navbar() {
           </Typography>
         </Box>
 
-        {}
-        <Box sx={{ display: { xs: "none", md: "flex" }, gap: 3 }}>
-          <Typography
-            sx={{
-              cursor: "pointer",
-              fontWeight: "500",
-              "&:hover": { color: darkMode ? "#ffffff" : "#6b4f3f" }
-            }}
-          >
+        {/* NAV LINKS */}
+        <Box
+          sx={{
+            position: "absolute",
+            left: "50%",
+            transform: "translateX(-50%)",
+            display: { xs: "none", md: "flex" },
+            gap: 4
+          }}
+        >
+          <Typography onClick={() => navigate("/")} sx={{ cursor: "pointer" }}>
             Home
           </Typography>
-          <Typography
-            sx={{
-              cursor: "pointer",
-              fontWeight: "500",
-              "&:hover": { color: darkMode ? "#ffffff" : "#6b4f3f" }
-            }}
-          >
+          <Typography onClick={() => navigate("/menu")} sx={{ cursor: "pointer" }}>
             Menu
           </Typography>
-          <Typography
-            sx={{
-              cursor: "pointer",
-              fontWeight: "500",
-              "&:hover": { color: darkMode ? "#ffffff" : "#6b4f3f" }
-            }}
-          >
+          <Typography onClick={() => navigate("/about")} sx={{ cursor: "pointer" }}>
             About
           </Typography>
-          <Typography
-            sx={{
-              cursor: "pointer",
-              fontWeight: "500",
-              "&:hover": { color: darkMode ? "#ffffff" : "#6b4f3f" }
-            }}
-          >
+          <Typography onClick={() => navigate("/contact")} sx={{ cursor: "pointer" }}>
             Contact
           </Typography>
         </Box>
 
-        {}
-        <Box
-          sx={{
-            display: { xs: "none", md: "flex" },
-            alignItems: "center",
-            bgcolor: darkMode ? "#d9c4aa" : "#f5efe6",
-            px: 2,
-            borderRadius: 2
-          }}
-        >
-          <InputBase
-            placeholder="𝒮ℯ𝒶𝓇𝒸𝒽 𝒞ℴ𝒻𝒻ℯℯ..."
-            sx={{ color: darkMode ? "#271b1b" : "#3c2b21" }}
-          />
-        </Box>
+        {/* RIGHT SIDE */}
+        <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
 
-        {}
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          {/* CART */}
           <Button
-            onClick={() => setDarkMode(!darkMode)}
+            onClick={() => navigate("/cart")}
+            variant="outlined"
             sx={{
-              border: "1px solid #000",
-              color: darkMode ? "#000000" : "#6b4f3f",
-              "&:hover": { bgcolor: "#000", color: "#fff" }
+              borderColor: "#000",
+              color: "#000",
+              fontWeight: "bold",
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+              fontSize: "16px",
+              padding: "6px 16px",
+              "&:hover": {
+                bgcolor: "#000",
+                color: "#fff"
+              }
             }}
           >
-            {darkMode ? "Light" : "Dark"}
+            <Badge badgeContent={cartCount} color="error">
+              <ShoppingCartIcon />
+            </Badge>
+            CART
           </Button>
 
-          <Box sx={{ display: { xs: "none", md: "flex" }, gap: 1 }}>
-            <Button
-              variant="outlined"
-              sx={{
-                borderColor: "#000",
-                color: "#000",
-                "&:hover": { bgcolor: "#000", color: "#fff" }
-              }}
-            >
-              Login
-            </Button>
-
-            <Button
-              variant="contained"
-              sx={{
-                bgcolor: "#000",
-                color: "#fff",
-                "&:hover": { bgcolor: "#333" }
-              }}
-            >
-              Register
-            </Button>
-          </Box>
-
-          <IconButton
-            sx={{ display: { xs: "flex", md: "none" } }}
-            onClick={() => setOpen(true)}
+          {/* LOGIN */}
+          <Button
+            variant="outlined"
+            sx={{
+              borderColor: "#000",
+              color: "#000",
+              "&:hover": { bgcolor: "#000", color: "#fff" }
+            }}
+            onClick={() => navigate("/login")}
           >
-            ☰
-          </IconButton>
+            Login
+          </Button>
+
+          {/* REGISTER */}
+          <Button
+            variant="contained"
+            sx={{
+              bgcolor: "#000",
+              color: "#fff",
+              "&:hover": { bgcolor: "#333" }
+            }}
+            onClick={() => navigate("/register")}
+          >
+            Register
+          </Button>
         </Box>
       </Toolbar>
 
-      {}
+      {/* DRAWER */}
       <Drawer anchor="right" open={open} onClose={() => setOpen(false)}>
-        <Box
-          sx={{
-            width: 250,
-            bgcolor: darkMode ? "#e6d3b3" : "#ffffff",
-            color: darkMode ? "#ffffff" : "#6b4f3f",
-            height: "100%"
-          }}
-        >
+        <Box sx={{ width: 250 }}>
           <List>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemText primary="Home" />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemText primary="Menu" />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemText primary="About" />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemText primary="Contact" />
-              </ListItemButton>
-            </ListItem>
-            <ListItem>
-              <Button fullWidth variant="outlined">
-                Login
-              </Button>
-            </ListItem>
-            <ListItem>
-              <Button fullWidth variant="contained" sx={{ bgcolor: "#000", color: "#fff" }}>
-                Register
-              </Button>
-            </ListItem>
+            {["Home", "Menu", "About", "Contact"].map((text) => (
+              <ListItem key={text} disablePadding>
+                <ListItemButton
+                  onClick={() => {
+                    navigate(text === "Home" ? "/" : `/${text.toLowerCase()}`);
+                    setOpen(false);
+                  }}
+                >
+                  <ListItemText primary={text} />
+                </ListItemButton>
+              </ListItem>
+            ))}
           </List>
         </Box>
       </Drawer>

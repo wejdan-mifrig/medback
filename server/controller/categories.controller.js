@@ -26,7 +26,7 @@ export const getAllCategories = async (req, res) => {
     }
 };
 
-// ✅ get category by id
+// get category by id
 export const getCategoryById = async (req, res) => {
     try {
         const id = req.params.id;
@@ -42,7 +42,7 @@ export const getCategoryById = async (req, res) => {
     }
 };
 
-// ✅ update category
+//update category
 export const updateCategory = async (req, res) => {
     try {
         const id = req.params.id;
@@ -64,7 +64,7 @@ export const updateCategory = async (req, res) => {
     }
 };
 
-// ✅ delete category
+//  delete category
 export const deleteCategory = async (req, res) => {
     try {
         const id = req.params.id;
