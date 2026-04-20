@@ -74,48 +74,66 @@ function Register() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        background: "linear-gradient(135deg, #f3e9dc, #e6ccb2, #d6ccc2)",
-        position: "relative",
-        overflow: "hidden",
+
+        // 🎨 نفس خلفية Login
+        background:
+          "linear-gradient(135deg, #1c1c1c, #3e2723, #6f4e37)",
+
+        animation: "bgMove 10s infinite alternate",
+        "@keyframes bgMove": {
+          "0%": { backgroundPosition: "0% 50%" },
+          "100%": { backgroundPosition: "100% 50%" },
+        },
       }}
     >
-      
-  
-
       <Container maxWidth="sm">
         <Paper
-          elevation={0}
+          elevation={10}
           sx={{
             p: 5,
-            borderRadius: "30px",
+            borderRadius: "25px",
             textAlign: "center",
-            backdropFilter: "blur(20px)",
-            background: "rgba(255,255,255,0.25)",
-            border: "1px solid rgba(255,255,255,0.4)",
-            boxShadow: "0 10px 40px rgba(0,0,0,0.25)",
-            animation: "fadeSlide 0.8s ease",
 
-            "@keyframes fadeSlide": {
-              from: { opacity: 0, transform: "translateY(-40px)" },
+            // ✨ نفس glass effect
+            background: "rgba(255,255,255,0.08)",
+            backdropFilter: "blur(15px)",
+            border: "1px solid rgba(255,255,255,0.2)",
+            boxShadow: "0 10px 40px rgba(0,0,0,0.5)",
+            color: "#fff",
+
+            // ✨ نفس animation
+            animation: "fadeUp 0.8s ease",
+            "@keyframes fadeUp": {
+              from: { opacity: 0, transform: "translateY(40px)" },
               to: { opacity: 1, transform: "translateY(0)" },
             },
 
+            transition: "0.4s",
             "&:hover": {
-              transform: "scale(1.03)",
-              transition: "0.4s",
+              transform: "scale(1.02)",
+              boxShadow: "0 10px 40px rgba(0,0,0,0.6)",
             },
           }}
         >
           <Typography
             variant="h4"
             sx={{
-              mb: 3,
+              mb: 1,
               fontWeight: "bold",
-              color: "#3e2723",
-              letterSpacing: "1px",
+              color: "#d7ccc8",
+              letterSpacing: "2px",
+              animation: "fadeText 1s ease",
+              "@keyframes fadeText": {
+                from: { opacity: 0 },
+                to: { opacity: 1 },
+              },
             }}
           >
-            Create Account 
+            Create Account
+          </Typography>
+
+          <Typography sx={{ mb: 3, color: "#b0a7a7", fontSize: "14px" }}>
+            Join us and start your journey ☕
           </Typography>
 
           <Box
@@ -133,13 +151,15 @@ function Register() {
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
               }
-              fullWidth
               variant="filled"
               sx={{
                 "& .MuiFilledInput-root": {
-                  background: "rgba(255,255,255,0.6)",
+                  background: "rgba(255,255,255,0.15)",
                   borderRadius: "10px",
+                  color: "#fff",
                 },
+                input: { color: "#fff" },
+                label: { color: "#ddd" },
               }}
             />
 
@@ -150,13 +170,15 @@ function Register() {
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
               }
-              fullWidth
               variant="filled"
               sx={{
                 "& .MuiFilledInput-root": {
-                  background: "rgba(255,255,255,0.6)",
+                  background: "rgba(255,255,255,0.15)",
                   borderRadius: "10px",
+                  color: "#fff",
                 },
+                input: { color: "#fff" },
+                label: { color: "#ddd" },
               }}
             />
 
@@ -167,13 +189,15 @@ function Register() {
               onChange={(e) =>
                 setFormData({ ...formData, password: e.target.value })
               }
-              fullWidth
               variant="filled"
               sx={{
                 "& .MuiFilledInput-root": {
-                  background: "rgba(255,255,255,0.6)",
+                  background: "rgba(255,255,255,0.15)",
                   borderRadius: "10px",
+                  color: "#fff",
                 },
+                input: { color: "#fff" },
+                label: { color: "#ddd" },
               }}
             />
 
@@ -187,13 +211,15 @@ function Register() {
                   confirmPassword: e.target.value,
                 })
               }
-              fullWidth
               variant="filled"
               sx={{
                 "& .MuiFilledInput-root": {
-                  background: "rgba(255,255,255,0.6)",
+                  background: "rgba(255,255,255,0.15)",
                   borderRadius: "10px",
+                  color: "#fff",
                 },
+                input: { color: "#fff" },
+                label: { color: "#ddd" },
               }}
             />
 
@@ -204,18 +230,20 @@ function Register() {
               sx={{
                 mt: 2,
                 py: 1.3,
-                borderRadius: "14px",
-                background:
-                  "linear-gradient(135deg, #6f4e37, #4e342e)",
-                color: "#fff",
+                borderRadius: "12px",
+                background: "linear-gradient(135deg, #6f4e37, #000)",
                 fontWeight: "bold",
                 letterSpacing: "1px",
-                boxShadow: "0 0 15px rgba(111,78,55,0.6)",
                 transition: "0.3s",
+                animation: "btnGlow 2s infinite alternate",
+
+                "@keyframes btnGlow": {
+                  from: { boxShadow: "0 0 10px #6f4e37" },
+                  to: { boxShadow: "0 0 25px #000" },
+                },
 
                 "&:hover": {
-                  transform: "scale(1.07)",
-                  boxShadow: "0 0 25px rgba(0,0,0,0.4)",
+                  transform: "scale(1.05)",
                 },
               }}
             >
@@ -223,23 +251,14 @@ function Register() {
             </Button>
           </Box>
 
-          <Typography
-            sx={{
-              mt: 2,
-              color: "#3e2723",
-              fontSize: "14px",
-              opacity: 0.8,
-            }}
-          >
+          <Typography sx={{ mt: 2, color: "#ddd", fontSize: "14px" }}>
             Already have an account?{" "}
             <Link
               component="button"
               onClick={() => navigate("/login")}
               sx={{
-                color: "#6f4e37",
+                color: "#fff",
                 fontWeight: "bold",
-                textDecoration: "none",
-                cursor: "pointer",
               }}
             >
               Login
@@ -252,3 +271,4 @@ function Register() {
 }
 
 export default Register;
+
