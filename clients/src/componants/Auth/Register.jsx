@@ -55,6 +55,12 @@ function Register() {
       localStorage.setItem("currentUser", JSON.stringify(res.data.user));
       toast.success("Registered successfully");
 
+      const pendingCart = JSON.parse(localStorage.getItem("pendingCart"));
+      if (pendingCart && pendingCart.length > 0) {
+        localStorage.setItem("cart", JSON.stringify(pendingCart));
+        localStorage.removeItem("pendingCart");
+      }
+
       navigate("/login");
     } catch (err) {
       console.error(err);
@@ -74,11 +80,7 @@ function Register() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-
-        // 🎨 نفس خلفية Login
-        background:
-          "linear-gradient(135deg, #1c1c1c, #3e2723, #6f4e37)",
-
+        background: "linear-gradient(135deg, #1c1c1c, #3e2723, #6f4e37)",
         animation: "bgMove 10s infinite alternate",
         "@keyframes bgMove": {
           "0%": { backgroundPosition: "0% 50%" },
@@ -88,65 +90,27 @@ function Register() {
     >
       <Container maxWidth="sm">
         <Paper
-          elevation={10}
           sx={{
             p: 5,
             borderRadius: "25px",
             textAlign: "center",
-
-            // ✨ نفس glass effect
-            background: "rgba(255,255,255,0.08)",
-            backdropFilter: "blur(15px)",
+            background: "rgba(255,255,255,0.12)",
+            backdropFilter: "blur(12px)",
             border: "1px solid rgba(255,255,255,0.2)",
-            boxShadow: "0 10px 40px rgba(0,0,0,0.5)",
-            color: "#fff",
-
-            // ✨ نفس animation
-            animation: "fadeUp 0.8s ease",
-            "@keyframes fadeUp": {
-              from: { opacity: 0, transform: "translateY(40px)" },
-              to: { opacity: 1, transform: "translateY(0)" },
-            },
-
-            transition: "0.4s",
-            "&:hover": {
-              transform: "scale(1.02)",
-              boxShadow: "0 10px 40px rgba(0,0,0,0.6)",
-            },
           }}
         >
           <Typography
             variant="h4"
-            sx={{
-              mb: 1,
-              fontWeight: "bold",
-              color: "#d7ccc8",
-              letterSpacing: "2px",
-              animation: "fadeText 1s ease",
-              "@keyframes fadeText": {
-                from: { opacity: 0 },
-                to: { opacity: 1 },
-              },
-            }}
+            sx={{ mb: 3, fontWeight: "bold", color: "#fff" }}
           >
             Create Account
           </Typography>
 
-          <Typography sx={{ mb: 3, color: "#b0a7a7", fontSize: "14px" }}>
-            Join us and start your journey ☕
-          </Typography>
-
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            sx={{
-              display: "flex",
-              gap: 2,
-              flexDirection: "column",
-            }}
-          >
+          <Box component="form" onSubmit={handleSubmit}>
             <TextField
               label="Name"
+              fullWidth
+              margin="normal"
               value={formData.name}
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
@@ -165,7 +129,8 @@ function Register() {
 
             <TextField
               label="Email"
-              type="email"
+              fullWidth
+              margin="normal"
               value={formData.email}
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
@@ -185,6 +150,8 @@ function Register() {
             <TextField
               label="Password"
               type="password"
+              fullWidth
+              margin="normal"
               value={formData.password}
               onChange={(e) =>
                 setFormData({ ...formData, password: e.target.value })
@@ -204,6 +171,8 @@ function Register() {
             <TextField
               label="Confirm Password"
               type="password"
+              fullWidth
+              margin="normal"
               value={formData.confirmPassword}
               onChange={(e) =>
                 setFormData({
@@ -225,26 +194,13 @@ function Register() {
 
             <Button
               type="submit"
+              fullWidth
               variant="contained"
-              disabled={loading}
               sx={{
-                mt: 2,
+                mt: 3,
                 py: 1.3,
                 borderRadius: "12px",
                 background: "linear-gradient(135deg, #6f4e37, #000)",
-                fontWeight: "bold",
-                letterSpacing: "1px",
-                transition: "0.3s",
-                animation: "btnGlow 2s infinite alternate",
-
-                "@keyframes btnGlow": {
-                  from: { boxShadow: "0 0 10px #6f4e37" },
-                  to: { boxShadow: "0 0 25px #000" },
-                },
-
-                "&:hover": {
-                  transform: "scale(1.05)",
-                },
               }}
             >
               {loading ? "Loading..." : "Register"}
@@ -256,10 +212,7 @@ function Register() {
             <Link
               component="button"
               onClick={() => navigate("/login")}
-              sx={{
-                color: "#fff",
-                fontWeight: "bold",
-              }}
+              sx={{ color: "#fff", fontWeight: "bold" }}
             >
               Login
             </Link>
@@ -271,4 +224,3 @@ function Register() {
 }
 
 export default Register;
-

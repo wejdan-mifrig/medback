@@ -6,7 +6,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import FlagIcon from "@mui/icons-material/Flag";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
-function About() {
+function UserAbout() {
   return (
     <Box
       sx={{
@@ -53,36 +53,24 @@ function About() {
           About QHWA Coffee
         </Typography>
 
+    
         <Grid container direction="column" alignItems="center" spacing={3}>
 
           {[
-            {
-              icon: <LocalCafeIcon sx={{ fontSize: 50 }} />,
-              title: "Who We Are",
-              text: "A premium café brand offering the finest coffee, cakes, and drinks."
-            },
-            {
-              icon: <EmojiObjectsIcon sx={{ fontSize: 50 }} />,
-              title: "What We Offer",
-              text: "Hot drinks, cold drinks, desserts, and handcrafted beverages."
-            },
-            {
-              icon: <VisibilityIcon sx={{ fontSize: 50 }} />,
-              title: "Why Choose Us",
-              text: "High quality ingredients and unforgettable coffee experience."
-            },
-            {
-              icon: <FlagIcon sx={{ fontSize: 50 }} />,
-              title: "Our Mission",
-              text: "To deliver happiness in every cup and every bite."
-            },
-            {
-              icon: <FavoriteIcon sx={{ fontSize: 50 }} />,
-              title: "Our Vision",
-              text: "To become the most loved coffee destination in the region."
-            }
+            { icon: <LocalCafeIcon sx={{ fontSize: 50 }} />, title: "Who We Are", text: "A premium café brand offering the finest coffee, cakes, and drinks." },
+            { icon: <EmojiObjectsIcon sx={{ fontSize: 50 }} />, title: "What We Offer", text: "Hot drinks, cold drinks, desserts, and handcrafted beverages." },
+            { icon: <VisibilityIcon sx={{ fontSize: 50 }} />, title: "Why Choose Us", text: "High quality ingredients and unforgettable coffee experience." },
+            { icon: <FlagIcon sx={{ fontSize: 50 }} />, title: "Our Mission", text: "To deliver happiness in every cup and every bite." },
+            { icon: <FavoriteIcon sx={{ fontSize: 50 }} />, title: "Our Vision", text: "To become the most loved coffee destination in the region." }
           ].map((item, i) => (
-            <Grid item xs={12} key={i} sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
+            <Grid
+              key={i}
+              sx={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center"
+              }}
+            >
               <Card
                 sx={{
                   width: "70%",
@@ -107,6 +95,7 @@ function About() {
 
         </Grid>
 
+     
         <Box sx={{ mt: 10 }}>
           <Typography variant="h4" align="center" sx={{ mb: 4 }}>
             Customer Reviews
@@ -121,7 +110,14 @@ function About() {
               { name: "Lina", text: "I love iced latte!", rating: 5 },
               { name: "Omar", text: "Highly recommended", rating: 5 }
             ].map((review, i) => (
-              <Grid item xs={12} key={i} sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
+              <Grid
+                key={i}
+                sx={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center"
+                }}
+              >
                 <Card
                   sx={{
                     width: "70%",
@@ -147,4 +143,4 @@ function About() {
   );
 }
 
-export default About;
+export default UserAbout;

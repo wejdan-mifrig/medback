@@ -39,9 +39,19 @@ function Login() {
         const user = res.data.user;
         const token = res.data.token;
 
+      
         localStorage.setItem("token", token);
         localStorage.setItem("currentUser", JSON.stringify(user));
 
+       
+        const pendingCart = JSON.parse(localStorage.getItem("pendingCart"));
+
+        if (pendingCart && pendingCart.length > 0) {
+          localStorage.setItem("cart", JSON.stringify(pendingCart));
+          localStorage.removeItem("pendingCart");
+        }
+
+       
         if (user?.role === "admin") {
           navigate("/admin");
         } else {
@@ -65,11 +75,7 @@ function Login() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-
-        /* 🎨 خلفية جديدة */
-        background:
-          "linear-gradient(135deg, #1c1c1c, #3e2723, #6f4e37)",
-
+        background: "linear-gradient(135deg, #1c1c1c, #3e2723, #6f4e37)",
         animation: "bgMove 10s infinite alternate",
         "@keyframes bgMove": {
           "0%": { backgroundPosition: "0% 50%" },
@@ -83,40 +89,12 @@ function Login() {
             p: 5,
             borderRadius: "25px",
             textAlign: "center",
-
-            /* ✨ Glass effect */
             background: "rgba(255,255,255,0.12)",
             backdropFilter: "blur(12px)",
             border: "1px solid rgba(255,255,255,0.2)",
-
-            /* ✨ animation */
-            animation: "fadeUp 0.8s ease",
-            "@keyframes fadeUp": {
-              from: { opacity: 0, transform: "translateY(40px)" },
-              to: { opacity: 1, transform: "translateY(0)" },
-            },
-
-            transition: "0.4s",
-            "&:hover": {
-              transform: "scale(1.02)",
-              boxShadow: "0 10px 40px rgba(0,0,0,0.4)",
-            },
           }}
         >
-          <Typography
-            variant="h4"
-            sx={{
-              mb: 3,
-              fontWeight: "bold",
-              color: "#fff",
-              letterSpacing: "2px",
-              animation: "fadeText 1s ease",
-              "@keyframes fadeText": {
-                from: { opacity: 0 },
-                to: { opacity: 1 },
-              },
-            }}
-          >
+          <Typography variant="h4" sx={{ mb: 3, fontWeight: "bold", color: "#fff" }}>
             Welcome Back
           </Typography>
 
@@ -169,19 +147,6 @@ function Login() {
               py: 1.3,
               borderRadius: "12px",
               background: "linear-gradient(135deg, #6f4e37, #000)",
-              fontWeight: "bold",
-              letterSpacing: "1px",
-              transition: "0.3s",
-              animation: "btnGlow 2s infinite alternate",
-
-              "@keyframes btnGlow": {
-                from: { boxShadow: "0 0 10px #6f4e37" },
-                to: { boxShadow: "0 0 25px #000" },
-              },
-
-              "&:hover": {
-                transform: "scale(1.05)",
-              },
             }}
             onClick={handleLogin}
             disabled={loading}
@@ -194,10 +159,7 @@ function Login() {
             <Link
               component="button"
               onClick={() => navigate("/register")}
-              sx={{
-                color: "#fff",
-                fontWeight: "bold",
-              }}
+              sx={{ color: "#fff", fontWeight: "bold" }}
             >
               Register
             </Link>

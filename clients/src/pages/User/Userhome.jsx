@@ -18,31 +18,28 @@ import EmojiFoodBeverageIcon from "@mui/icons-material/EmojiFoodBeverage";
 
 
 
+import imgCupcake from "../../assets/Cupcake.jpg";
+import imgDonut from "../../assets/Donuts.jpg";
+import imgVanillaCake from "../../assets/Vanilla Cake.jpg";
+import imgTiramisu from "../../assets/Tiramisu.jpg";
+import imgBrownie from "../../assets/Brownies.jpg";
+import imgCheesecake from "../../assets/Cheesecake.jpg";
 
-import imgCupcake from "../assets/Cupcake.jpg";
-import imgDonut from "../assets/Donuts.jpg";
-import imgVanillaCake from "../assets/Vanilla Cake.jpg";
-import imgTiramisu from "../assets/Tiramisu.jpg";
-import imgBrownie from "../assets/Brownies.jpg";
-import imgCheesecake from "../assets/Cheesecake.jpg";
+import imgColdChocolate from "../../assets/Cold Chocolate.jpg";
+import imgEnergyDrink from "../../assets/Energy Drink.jpg";
+import imgStrawberrySmoothie from "../../assets/Strawberry Smoothie.jpg";
+import imgMojito from "../../assets/Mojito.jpg";
+import imgOrangeJuice from "../../assets/Orange Juice.jpg";
+import imgIcedCoffee from "../../assets/Iced Coffee.jpg";
 
-import imgColdChocolate from "../assets/Cold Chocolate.jpg";
-import imgEnergyDrink from "../assets/Energy Drink.jpg";
-import imgStrawberrySmoothie from "../assets/Strawberry Smoothie.jpg";
-import imgMojito from "../assets/Mojito.jpg";
-import imgOrangeJuice from "../assets/Orange Juice.jpg";
-import imgIcedCoffee from "../assets/Iced Coffee.jpg";
-
-import imgSpanishLatte from "../assets/Spanish Latte.jpg";
-import imgHotChocolate from "../assets/Hot Chocolate.jpg";
-import imgFlatWhite from "../assets/Flat White.jpg";
-import imgMocha from "../assets/Mocha.jpg";
-import imgAmericano from "../assets/Americano.jpg";
-import imgLatte from "../assets/Latte.jpg";
-import imgCappuccino from "../assets/Cappuccino.jpg";
-import imgEspresso from "../assets/Espresso.jpg";
-
-
+import imgSpanishLatte from "../../assets/Spanish Latte.jpg";
+import imgHotChocolate from "../../assets/Hot Chocolate.jpg";
+import imgFlatWhite from "../../assets/Flat White.jpg";
+import imgMocha from "../../assets/Mocha.jpg";
+import imgAmericano from "../../assets/Americano.jpg";
+import imgLatte from "../../assets/Latte.jpg";
+import imgCappuccino from "../../assets/Cappuccino.jpg";
+import imgEspresso from "../../assets/Espresso.jpg";
 
 
 const cardContainerStyle = {
@@ -82,7 +79,6 @@ const getStartPosition = (i) => {
 
 
 
-
 const menuItems = [
   { title: "Cupcake", img: imgCupcake },
   { title: "Donut", img: imgDonut },
@@ -110,14 +106,12 @@ const menuItems = [
 
 
 
-
-function Home() {
+function UserHome() {
   const navigate = useNavigate();
   const sliderRef = useRef();
 
   const scroll = (dir) => {
-    const container = sliderRef.current;
-    container.scrollBy({
+    sliderRef.current.scrollBy({
       left: dir === "left" ? -420 : 420,
       behavior: "smooth",
     });
@@ -143,7 +137,7 @@ function Home() {
     >
       <Container maxWidth="lg">
 
-   
+    
         <Box sx={{ height: "90vh", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", mb: 12 }}>
           <Box>
             <Box sx={{ display: "flex", justifyContent: "center", gap: 1 }}>
@@ -159,7 +153,7 @@ function Home() {
             </Typography>
 
             <Button
-              onClick={() => navigate("/menu")}
+              onClick={() => navigate("/user/menu")}
               sx={{
                 mt: 4,
                 px: 5,
@@ -175,17 +169,7 @@ function Home() {
           </Box>
         </Box>
 
-        
-        <Box sx={{ mt: 14 }}>
-          <Typography variant="h3" sx={{ color: "#c8a97e", mb: 3 }}>
-            QHWA WITH LOVE
-          </Typography>
-          <Typography sx={{ color: "#f5e6c8" }}>
-            Coffee is more than just a drink—it’s a daily ritual that brings comfort, energy, and connection.
-          </Typography>
-        </Box>
-
-        
+    
         <Box sx={{ mt: 14 }}>
           <Typography variant="h3" sx={{ color: "#c8a97e", mb: 5 }}>
             Top Picks
@@ -237,7 +221,7 @@ function Home() {
           </Box>
         </Box>
 
-    
+   
         <Box sx={{ mt: 16, pb: 10 }}>
           <Typography variant="h3" sx={{ color: "#c8a97e", mb: 6, textAlign: "center" }}>
             Our Partners
@@ -264,4 +248,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default UserHome;

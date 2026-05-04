@@ -5,7 +5,7 @@ import userRoutes from "./router/user.routes.js";
 import categoriesRoutes from "./router/categories.routes.js";
 import productsRoutes from "./router/products.routes.js"; 
 import cors from "cors";
-
+import messageRoutes from "./routes/message.routes.js";
 dotenv.config();
 
 const app = express();

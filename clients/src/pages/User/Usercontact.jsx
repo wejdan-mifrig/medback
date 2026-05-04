@@ -1,3 +1,4 @@
+
 import {
   Container,
   TextField,
@@ -8,9 +9,8 @@ import {
 } from "@mui/material";
 
 import { useState } from "react";
-import api from "../api";
 
-function Contact() {
+function UserContact() {
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -30,9 +30,15 @@ function Contact() {
     try {
       setLoading(true);
 
-      const res = await api.post("/messages", form);
+      const res = await fetch("http://localhost:5000/api/messages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(form)
+      });
 
-      if (res.status === 201 || res.status === 200) {
+      if (res.ok) {
         alert("Message sent successfully ☕");
 
         setForm({
@@ -59,7 +65,6 @@ function Contact() {
         justifyContent: "center",
         alignItems: "center",
 
-  
         background: "linear-gradient(135deg, #1c1c1c, #3e2723, #6f4e37)",
 
         animation: "bgMove 10s infinite alternate",
@@ -77,7 +82,7 @@ function Contact() {
             borderRadius: "25px",
             textAlign: "center",
 
-            background: "rgba(255,255,255,0.10)",
+            background: "rgba(255,255,255,0.08)",
             backdropFilter: "blur(15px)",
             border: "1px solid rgba(255,255,255,0.2)",
             boxShadow: "0 10px 40px rgba(0,0,0,0.5)",
@@ -101,14 +106,20 @@ function Contact() {
             sx={{
               mb: 1,
               fontWeight: "bold",
-              color: "#f5e6da"
+              color: "#d7ccc8",
+              letterSpacing: "2px",
+              animation: "fadeText 1s ease",
+              "@keyframes fadeText": {
+                from: { opacity: 0 },
+                to: { opacity: 1 }
+              }
             }}
           >
-            Contact Us 
+            Contact Us
           </Typography>
 
-          <Typography sx={{ mb: 3, color: "#d7ccc8", fontSize: "14px" }}>
-            We’d love to hear from you
+          <Typography sx={{ mb: 3, color: "#b0a7a7", fontSize: "14px" }}>
+            We’d love to hear from you ☕
           </Typography>
 
           <Box
@@ -129,7 +140,7 @@ function Contact() {
               variant="filled"
               sx={{
                 "& .MuiFilledInput-root": {
-                  background: "rgba(255,255,255,0.12)",
+                  background: "rgba(255,255,255,0.15)",
                   borderRadius: "10px",
                   color: "#fff"
                 },
@@ -147,7 +158,7 @@ function Contact() {
               variant="filled"
               sx={{
                 "& .MuiFilledInput-root": {
-                  background: "rgba(255,255,255,0.12)",
+                  background: "rgba(255,255,255,0.15)",
                   borderRadius: "10px",
                   color: "#fff"
                 },
@@ -167,7 +178,7 @@ function Contact() {
               variant="filled"
               sx={{
                 "& .MuiFilledInput-root": {
-                  background: "rgba(255,255,255,0.12)",
+                  background: "rgba(255,255,255,0.15)",
                   borderRadius: "10px",
                   color: "#fff"
                 },
@@ -186,9 +197,17 @@ function Contact() {
                 borderRadius: "12px",
                 background: "linear-gradient(135deg, #6f4e37, #000)",
                 fontWeight: "bold",
+                letterSpacing: "1px",
+                transition: "0.3s",
+                animation: "btnGlow 2s infinite alternate",
+
+                "@keyframes btnGlow": {
+                  from: { boxShadow: "0 0 10px #6f4e37" },
+                  to: { boxShadow: "0 0 25px #000" }
+                },
 
                 "&:hover": {
-                  background: "linear-gradient(135deg, #a67c52, #000)"
+                  transform: "scale(1.05)"
                 }
               }}
             >
@@ -201,4 +220,4 @@ function Contact() {
   );
 }
 
-export default Contact;
+export default UserContact;

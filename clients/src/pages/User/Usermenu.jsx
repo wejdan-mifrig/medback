@@ -8,42 +8,42 @@ import {
   Button,
   TextField
 } from "@mui/material";
-import api from "../api";
+import api from "../../api";
 
 
 
-import Cupcake from "../assets/Cupcake.jpg";
-import Muffin from "../assets/Muffin.jpg";
-import Donut from "../assets/Donuts.jpg";
-import CarrotCake from "../assets/Carrot Cake.jpg";
-import VanillaCake from "../assets/Vanilla Cake.jpg";
-import Tiramisu from "../assets/Tiramisu.jpg";
-import Brownie from "../assets/Brownies.jpg";
-import RedVelvet from "../assets/Red Velvet Cake.jpg";
-import ChocolateCake from "../assets/Chocolate Cake.jpg";
-import Cheesecake from "../assets/Cheesecake.jpg";
+import Cupcake from "../../assets/Cupcake.jpg";
+import Muffin from "../../assets/Muffin.jpg";
+import Donut from "../../assets/Donuts.jpg";
+import CarrotCake from "../../assets/Carrot Cake.jpg";
+import VanillaCake from "../../assets/Vanilla Cake.jpg";
+import Tiramisu from "../../assets/Tiramisu.jpg";
+import Brownie from "../../assets/Brownies.jpg";
+import RedVelvet from "../../assets/Red Velvet Cake.jpg";
+import ChocolateCake from "../../assets/Chocolate Cake.jpg";
+import Cheesecake from "../../assets/Cheesecake.jpg";
 
-import ColdChocolate from "../assets/Cold Chocolate.jpg";
-import EnergyDrink from "../assets/Energy Drink.jpg";
-import IceTea from "../assets/Ice Tea.jpg";
-import StrawberrySmoothie from "../assets/Strawberry Smoothie.jpg";
-import Mojito from "../assets/Mojito.jpg";
-import OrangeJuice from "../assets/Orange Juice.jpg";
-import LemonJuice from "../assets/Lemon Juice.jpg";
-import Frappuccino from "../assets/Frappuccino.jpg";
-import IcedLatte from "../assets/Iced Latte.jpg";
-import IcedCoffee from "../assets/Iced Coffee.jpg";
+import ColdChocolate from "../../assets/Cold Chocolate.jpg";
+import EnergyDrink from "../../assets/Energy Drink.jpg";
+import IceTea from "../../assets/Ice Tea.jpg";
+import StrawberrySmoothie from "../../assets/Strawberry Smoothie.jpg";
+import Mojito from "../../assets/Mojito.jpg";
+import OrangeJuice from "../../assets/Orange Juice.jpg";
+import LemonJuice from "../../assets/Lemon Juice.jpg";
+import Frappuccino from "../../assets/Frappuccino.jpg";
+import IcedLatte from "../../assets/Iced Latte.jpg";
+import IcedCoffee from "../../assets/Iced Coffee.jpg";
 
-import SpanishLatte from "../assets/Spanish Latte.jpg";
-import Tea from "../assets/Tea.jpg";
-import HotChocolate from "../assets/Hot Chocolate.jpg";
-import FlatWhite from "../assets/Flat White.jpg";
-import TurkishCoffee from "../assets/Turkish Coffee.jpg";
-import Mocha from "../assets/Mocha.jpg";
-import Americano from "../assets/Americano.jpg";
-import Latte from "../assets/Latte.jpg";
-import Cappuccino from "../assets/Cappuccino.jpg";
-import Espresso from "../assets/Espresso.jpg";
+import SpanishLatte from "../../assets/Spanish Latte.jpg";
+import Tea from "../../assets/Tea.jpg";
+import HotChocolate from "../../assets/Hot Chocolate.jpg";
+import FlatWhite from "../../assets/Flat White.jpg";
+import TurkishCoffee from "../../assets/Turkish Coffee.jpg";
+import Mocha from "../../assets/Mocha.jpg";
+import Americano from "../../assets/Americano.jpg";
+import Latte from "../../assets/Latte.jpg";
+import Cappuccino from "../../assets/Cappuccino.jpg";
+import Espresso from "../../assets/Espresso.jpg";
 
 
 
@@ -84,7 +84,7 @@ const imageMap = {
 
 
 
-function Menu() {
+function UserMenu() {  
   const [products, setProducts] = useState([]);
   const [quantities, setQuantities] = useState({});
 
@@ -191,15 +191,14 @@ function Menu() {
                   }}
                 >
 
-             
                   <Box
                     component="img"
                     src={imageMap[product.name]}
                     alt={product.name}
                     sx={{
-                      width: "85%",      
-                      height: 280,        
-                      objectFit: "cover",  
+                      width: "85%",
+                      height: 280,
+                      objectFit: "cover",
                       borderRadius: "18px",
                       border: "2px solid #e0c3a3",
                       display: "block",
@@ -263,4 +262,4 @@ function Menu() {
   );
 }
 
-export default Menu;
+export default UserMenu;

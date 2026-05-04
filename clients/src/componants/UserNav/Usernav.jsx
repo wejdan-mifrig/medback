@@ -10,7 +10,9 @@ import {
   ListItemButton,
   ListItemText,
   Badge,
-  IconButton
+  IconButton,
+  Menu,
+  MenuItem
 } from "@mui/material";
 
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -28,6 +30,19 @@ function Navbar() {
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+  
+  const user = JSON.parse(localStorage.getItem("currentUser"));
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleMenuOpen = (e) => setAnchorEl(e.currentTarget);
+  const handleMenuClose = () => setAnchorEl(null);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("currentUser");
+    navigate("/login");
+  };
 
   const updateCartCount = () => {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -57,7 +72,7 @@ function Navbar() {
           minHeight: 80
         }}
       >
-      
+        
         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
           <img
             src={coffeeLogo}
@@ -79,16 +94,37 @@ function Navbar() {
             gap: 4
           }}
         >
-          <Typography onClick={() => navigate("/")} sx={{ cursor: "pointer" }}>
+          <Typography
+            onClick={() => navigate(user ? "/user" : "/")}
+            sx={{ cursor: "pointer" }}
+          >
             Home
           </Typography>
-          <Typography onClick={() => navigate("/menu")} sx={{ cursor: "pointer" }}>
+
+          <Typography
+            onClick={() =>
+              navigate(user ? "/user/menu" : "/menu")
+            }
+            sx={{ cursor: "pointer" }}
+          >
             Menu
           </Typography>
-          <Typography onClick={() => navigate("/about")} sx={{ cursor: "pointer" }}>
+
+          <Typography
+            onClick={() =>
+              navigate(user ? "/user/about" : "/about")
+            }
+            sx={{ cursor: "pointer" }}
+          >
             About
           </Typography>
-          <Typography onClick={() => navigate("/contact")} sx={{ cursor: "pointer" }}>
+
+          <Typography
+            onClick={() =>
+              navigate(user ? "/user/contact" : "/contact")
+            }
+            sx={{ cursor: "pointer" }}
+          >
             Contact
           </Typography>
         </Box>
@@ -96,7 +132,6 @@ function Navbar() {
         
         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
           {isMobile ? (
-            // 📱 Mobile Menu Button
             <IconButton onClick={() => setOpen(true)} sx={{ color: "#000" }}>
               <MenuIcon />
             </IconButton>
@@ -104,21 +139,15 @@ function Navbar() {
             <>
             
               <Button
-                onClick={() => navigate("/cart")}
+                onClick={() =>
+                  navigate(user ? "/user/cart" : "/cart")
+                }
                 variant="outlined"
                 sx={{
                   borderColor: "#000",
                   color: "#000",
                   fontWeight: "bold",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 1,
-                  fontSize: "16px",
-                  padding: "6px 16px",
-                  "&:hover": {
-                    bgcolor: "#000",
-                    color: "#fff"
-                  }
+                  "&:hover": { bgcolor: "#000", color: "#fff" }
                 }}
               >
                 <Badge badgeContent={cartCount} color="error">
@@ -127,37 +156,78 @@ function Navbar() {
                 CART
               </Button>
 
-            
-              <Button
-                variant="outlined"
-                sx={{
-                  borderColor: "#000",
-                  color: "#000",
-                  "&:hover": { bgcolor: "#000", color: "#fff" }
-                }}
-                onClick={() => navigate("/login")}
-              >
-                Login
-              </Button>
+         
+              {!user ? (
+                <>
+                  <Button
+                    variant="outlined"
+                    sx={{
+                      borderColor: "#000",
+                      color: "#000",
+                      "&:hover": { bgcolor: "#000", color: "#fff" }
+                    }}
+                    onClick={() => navigate("/login")}
+                  >
+                    Login
+                  </Button>
 
-            
-              <Button
-                variant="contained"
-                sx={{
-                  bgcolor: "#000",
-                  color: "#fff",
-                  "&:hover": { bgcolor: "#333" }
-                }}
-                onClick={() => navigate("/register")}
-              >
-                Register
-              </Button>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      bgcolor: "#000",
+                      color: "#fff",
+                      "&:hover": { bgcolor: "#333" }
+                    }}
+                    onClick={() => navigate("/register")}
+                  >
+                    Register
+                  </Button>
+                </>
+              ) : (
+                <>
+                  
+                  <Button
+                    onClick={handleMenuOpen}
+                    sx={{
+                      border: "1px solid #000",
+                      color: "#000",
+                      fontWeight: "bold"
+                    }}
+                  >
+                    {user?.name}
+                  </Button>
+
+             
+                  <Menu
+                    anchorEl={anchorEl}
+                    open={Boolean(anchorEl)}
+                    onClose={handleMenuClose}
+                  >
+                    <MenuItem disabled>
+                      👤 {user?.name}
+                    </MenuItem>
+
+                    <MenuItem disabled>
+                      📧 {user?.email}
+                    </MenuItem>
+
+                    <MenuItem
+                      onClick={() => {
+                        handleLogout();
+                        handleMenuClose();
+                      }}
+                    >
+                      Logout
+                    </MenuItem>
+                  </Menu>
+                </>
+              )}
             </>
           )}
         </Box>
       </Toolbar>
 
-      
+      {/* DRAWER */}
       <Drawer
         anchor="right"
         open={open}
@@ -171,7 +241,6 @@ function Navbar() {
         }}
       >
         <Box sx={{ width: 250, p: 2 }}>
-
           <List>
             {["Home", "Menu", "About", "Contact"].map((text) => (
               <ListItem key={text} disablePadding>
@@ -185,7 +254,16 @@ function Navbar() {
                     }
                   }}
                   onClick={() => {
-                    navigate(text === "Home" ? "/" : `/${text.toLowerCase()}`);
+                    const path =
+                      text === "Home"
+                        ? user
+                          ? "/user"
+                          : "/"
+                        : user
+                        ? `/user/${text.toLowerCase()}`
+                        : `/${text.toLowerCase()}`;
+
+                    navigate(path);
                     setOpen(false);
                   }}
                 >
@@ -194,63 +272,6 @@ function Navbar() {
               </ListItem>
             ))}
           </List>
-
-        
-          <Button
-            fullWidth
-            sx={{
-              mt: 2,
-              border: "1px solid #000",
-              color: "#000",
-              "&:hover": {
-                bgcolor: "#000",
-                color: "#fff"
-              }
-            }}
-            onClick={() => {
-              navigate("/cart");
-              setOpen(false);
-            }}
-          >
-            CART ({cartCount})
-          </Button>
-
-          <Button
-            fullWidth
-            sx={{
-              mt: 1,
-              border: "1px solid #000",
-              color: "#000",
-              "&:hover": {
-                bgcolor: "#000",
-                color: "#fff"
-              }
-            }}
-            onClick={() => {
-              navigate("/login");
-              setOpen(false);
-            }}
-          >
-            Login
-          </Button>
-
-     
-          <Button
-            fullWidth
-            variant="contained"
-            sx={{
-              mt: 1,
-              bgcolor: "#000",
-              "&:hover": { bgcolor: "#333" }
-            }}
-            onClick={() => {
-              navigate("/register");
-              setOpen(false);
-            }}
-          >
-            Register
-          </Button>
-
         </Box>
       </Drawer>
     </AppBar>
