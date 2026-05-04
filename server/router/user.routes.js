@@ -1,11 +1,31 @@
-import express from 'express'
-import { createUser, getAllUsers, getUserById, loginUser } from '../controller/user.Controller.js'
+import express from "express";
+import {
+  createUser,
+  getAllUsers,
+  getUserById,
+  loginUser,
+  updateUser,
+  deleteUser
+} from "../controller/user.controller.js";
 
-const router = express.Router()
+import { protect } from "../Middleware/Protect.Middleware.js";
+import { adminOnly } from "../Middleware/Adminonly.Middleware.js";
 
-router.post("/register", createUser)
-router.post("/login", loginUser)
-router.get("/users", getAllUsers)
-router.get("/user/:id", getUserById)
+const router = express.Router();
 
-export default router
+router.post("/register", createUser);
+router.post("/login", loginUser);
+
+
+router.get("/users", protect, adminOnly, getAllUsers);
+
+
+router.get("/user/:id", protect, getUserById);
+
+
+router.put("/user/:id", protect, adminOnly, updateUser);
+
+
+router.delete("/user/:id", protect, adminOnly, deleteUser);
+
+export default router;

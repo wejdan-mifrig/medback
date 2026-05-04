@@ -12,7 +12,6 @@ function Footer({ darkMode }) {
         bgcolor: darkMode ? "#e6d3b3" : "#c4a484",
         color: "#000",
         p: 4,
-        mt: 4,
       }}
     >
       <Box
@@ -31,9 +30,7 @@ function Footer({ darkMode }) {
         </Box>
 
         {}
-        <Typography>
-          © 2026 QHWA Coffee. All rights reserved.
-        </Typography>
+        <Typography>© 2026 QHWA Coffee. All rights reserved.</Typography>
 
         {}
         <Box sx={{ display: "flex", gap: 2 }}>

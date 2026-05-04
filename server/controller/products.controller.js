@@ -22,7 +22,7 @@ export const createProduct = async (req, res) => {
     }
 };
 
-// جلب جميع المنتجات مع بيانات القسم والمستخدم
+
 export const getAllProducts = async (req, res) => {
     try {
         const products = await Products.find().populate("CatId").populate("userId");
@@ -32,7 +32,7 @@ export const getAllProducts = async (req, res) => {
     }
 };
 
-// جلب منتج واحد بواسطة ID
+
 export const getProductById = async (req, res) => {
     try {
         const product = await Products.findById(req.params.id).populate("CatId");
@@ -43,7 +43,7 @@ export const getProductById = async (req, res) => {
     }
 };
 
-// تعديل منتج
+
 export const updateProduct = async (req, res) => {
     try {
         const updatedProduct = await Products.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -53,7 +53,7 @@ export const updateProduct = async (req, res) => {
     }
 };
 
-// حذف منتج
+
 export const deleteProduct = async (req, res) => {
     try {
         await Products.findByIdAndDelete(req.params.id);
@@ -62,3 +62,8 @@ export const deleteProduct = async (req, res) => {
         return res.status(500).json({ message: "Error deleting product" });
     }
 };
+
+
+
+
+
