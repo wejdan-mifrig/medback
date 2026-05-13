@@ -34,13 +34,13 @@ function Footer({ darkMode }) {
 
         {}
         <Box sx={{ display: "flex", gap: 2 }}>
-          <Link href="#" target="_blank" color="inherit">
+          <Link href="http://www.facebook.com" target="_blank" color="inherit">
             <FacebookIcon />
           </Link>
-          <Link href="#" target="_blank" color="inherit">
+          <Link href="http://www.instagram.com" target="_blank" color="inherit">
             <InstagramIcon />
           </Link>
-          <Link href="#" target="_blank" color="inherit">
+          <Link href="http://www.twitter.com" target="_blank" color="inherit">
             <TwitterIcon />
           </Link>
         </Box>

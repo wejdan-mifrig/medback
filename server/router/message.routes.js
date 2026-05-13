@@ -1,23 +1,22 @@
 import express from "express";
 
+import { protect } from "../Middleware/Protect.Middleware.js";
+import { adminOnly } from "../Middleware/Adminonly.Middleware.js";
+
 import {
-  createMessage,
+  createMessages,
   getMessages,
-  deleteMessage,
-  markAsRead
-} from "../controllers/message.controller.js";
+} from "../controller/message.controller.js";
 
 const router = express.Router();
 
+router.post("/create-message", createMessages);
 
-router.post("/", createMessage);
-
-
-router.get("/", getMessages);
-
-
-router.delete("/:id", deleteMessage);
-
-router.put("/:id/read", markAsRead);
+router.get(
+  "/all-messages",
+  protect,
+  adminOnly,
+  getMessages
+);
 
 export default router;
