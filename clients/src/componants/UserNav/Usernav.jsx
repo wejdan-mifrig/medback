@@ -17,43 +17,54 @@ import {
 
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import MenuIcon from "@mui/icons-material/Menu";
+
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+
 import coffeeLogo from "../../assets/coffee.png";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
+
   const navigate = useNavigate();
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
-  
   const user = JSON.parse(localStorage.getItem("currentUser"));
+
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleMenuOpen = (e) => setAnchorEl(e.currentTarget);
+
   const handleMenuClose = () => setAnchorEl(null);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("currentUser");
+
     navigate("/login");
   };
 
   const updateCartCount = () => {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
     const total = cart.reduce((sum, item) => sum + item.qty, 0);
+
     setCartCount(total);
   };
 
   useEffect(() => {
     updateCartCount();
+
     window.addEventListener("storage", updateCartCount);
-    return () => window.removeEventListener("storage", updateCartCount);
+
+    return () =>
+      window.removeEventListener("storage", updateCartCount);
   }, []);
 
   return (
@@ -72,19 +83,24 @@ function Navbar() {
           minHeight: 80
         }}
       >
-        
+        {/* LOGO */}
         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
           <img
             src={coffeeLogo}
             alt="coffee logo"
-            style={{ width: 60, height: 60, borderRadius: "50%" }}
+            style={{
+              width: 60,
+              height: 60,
+              borderRadius: "50%"
+            }}
           />
+
           <Typography variant="h5" sx={{ fontWeight: "bold" }}>
             Qᴴᵂᴬ
           </Typography>
         </Box>
 
-        
+        {/* CENTER LINKS */}
         <Box
           sx={{
             position: "absolute",
@@ -129,15 +145,18 @@ function Navbar() {
           </Typography>
         </Box>
 
-        
+        {/* RIGHT SIDE */}
         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
           {isMobile ? (
-            <IconButton onClick={() => setOpen(true)} sx={{ color: "#000" }}>
+            <IconButton
+              onClick={() => setOpen(true)}
+              sx={{ color: "#000" }}
+            >
               <MenuIcon />
             </IconButton>
           ) : (
             <>
-            
+              {/* CART */}
               <Button
                 onClick={() =>
                   navigate(user ? "/user/cart" : "/cart")
@@ -147,16 +166,20 @@ function Navbar() {
                   borderColor: "#000",
                   color: "#000",
                   fontWeight: "bold",
-                  "&:hover": { bgcolor: "#000", color: "#fff" }
+                  "&:hover": {
+                    bgcolor: "#000",
+                    color: "#fff"
+                  }
                 }}
               >
                 <Badge badgeContent={cartCount} color="error">
                   <ShoppingCartIcon />
                 </Badge>
-                CART
+
+                <Box sx={{ ml: 1 }}>CART</Box>
               </Button>
 
-         
+              {/* AUTH */}
               {!user ? (
                 <>
                   <Button
@@ -164,7 +187,10 @@ function Navbar() {
                     sx={{
                       borderColor: "#000",
                       color: "#000",
-                      "&:hover": { bgcolor: "#000", color: "#fff" }
+                      "&:hover": {
+                        bgcolor: "#000",
+                        color: "#fff"
+                      }
                     }}
                     onClick={() => navigate("/login")}
                   >
@@ -176,7 +202,9 @@ function Navbar() {
                     sx={{
                       bgcolor: "#000",
                       color: "#fff",
-                      "&:hover": { bgcolor: "#333" }
+                      "&:hover": {
+                        bgcolor: "#333"
+                      }
                     }}
                     onClick={() => navigate("/register")}
                   >
@@ -185,7 +213,6 @@ function Navbar() {
                 </>
               ) : (
                 <>
-                  
                   <Button
                     onClick={handleMenuOpen}
                     sx={{
@@ -197,7 +224,6 @@ function Navbar() {
                     {user?.name}
                   </Button>
 
-             
                   <Menu
                     anchorEl={anchorEl}
                     open={Boolean(anchorEl)}
@@ -227,7 +253,7 @@ function Navbar() {
         </Box>
       </Toolbar>
 
-      {/* DRAWER */}
+      {/* MOBILE DRAWER */}
       <Drawer
         anchor="right"
         open={open}
@@ -242,6 +268,32 @@ function Navbar() {
       >
         <Box sx={{ width: 250, p: 2 }}>
           <List>
+            {/* USER INFO FIRST */}
+            {user && (
+              <ListItem
+                sx={{
+                  bgcolor: "rgba(255,255,255,0.3)",
+                  borderRadius: 3,
+                  mb: 2,
+                  py: 1.5
+                }}
+              >
+                <ListItemText
+                  primary={`👤 ${user?.name}`}
+                  secondary={`📧 ${user?.email}`}
+                  primaryTypographyProps={{
+                    fontWeight: "bold",
+                    color: "#000"
+                  }}
+                  secondaryTypographyProps={{
+                    color: "#333",
+                    fontSize: "0.85rem"
+                  }}
+                />
+              </ListItem>
+            )}
+
+            {/* NAV LINKS */}
             {["Home", "Menu", "About", "Contact"].map((text) => (
               <ListItem key={text} disablePadding>
                 <ListItemButton
@@ -264,6 +316,7 @@ function Navbar() {
                         : `/${text.toLowerCase()}`;
 
                     navigate(path);
+
                     setOpen(false);
                   }}
                 >
@@ -271,6 +324,98 @@ function Navbar() {
                 </ListItemButton>
               </ListItem>
             ))}
+
+            {/* CART */}
+            <ListItem disablePadding>
+              <ListItemButton
+                sx={{
+                  borderRadius: 2,
+                  mb: 1,
+                  "&:hover": {
+                    bgcolor: "#000",
+                    color: "#fff"
+                  }
+                }}
+                onClick={() => {
+                  navigate(user ? "/user/cart" : "/cart");
+
+                  setOpen(false);
+                }}
+              >
+                <Badge
+                  badgeContent={cartCount}
+                  color="error"
+                  sx={{ mr: 2 }}
+                >
+                  <ShoppingCartIcon />
+                </Badge>
+
+                <ListItemText primary="Cart" />
+              </ListItemButton>
+            </ListItem>
+
+            {/* LOGOUT */}
+            {user ? (
+              <ListItem disablePadding>
+                <ListItemButton
+                  sx={{
+                    borderRadius: 2,
+                    "&:hover": {
+                      bgcolor: "#000",
+                      color: "#fff"
+                    }
+                  }}
+                  onClick={() => {
+                    handleLogout();
+
+                    setOpen(false);
+                  }}
+                >
+                  <ListItemText primary="Logout" />
+                </ListItemButton>
+              </ListItem>
+            ) : (
+              <>
+                <ListItem disablePadding>
+                  <ListItemButton
+                    sx={{
+                      borderRadius: 2,
+                      mb: 1,
+                      "&:hover": {
+                        bgcolor: "#000",
+                        color: "#fff"
+                      }
+                    }}
+                    onClick={() => {
+                      navigate("/login");
+
+                      setOpen(false);
+                    }}
+                  >
+                    <ListItemText primary="Login" />
+                  </ListItemButton>
+                </ListItem>
+
+                <ListItem disablePadding>
+                  <ListItemButton
+                    sx={{
+                      borderRadius: 2,
+                      "&:hover": {
+                        bgcolor: "#000",
+                        color: "#fff"
+                      }
+                    }}
+                    onClick={() => {
+                      navigate("/register");
+
+                      setOpen(false);
+                    }}
+                  >
+                    <ListItemText primary="Register" />
+                  </ListItemButton>
+                </ListItem>
+              </>
+            )}
           </List>
         </Box>
       </Drawer>
